@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SmoothScrolling from "@/components/SmoothScrolling";
 
 export const metadata: Metadata = {
   title: "Arthur Agency",
@@ -12,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body>
-        {children}
+        <SmoothScrolling>{children}</SmoothScrolling>
       </body>
     </html>
   );
