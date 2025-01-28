@@ -19,7 +19,7 @@ model Project {
   image       String
   description String
   url         String
-  date        DateTime @default(now())
+  year        String
   category    String[]
 
   ProjectDetail ProjectDetail[]
