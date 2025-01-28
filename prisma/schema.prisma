@@ -20,6 +20,7 @@ model Project {
   description String
   url         String
   date        DateTime @default(now())
+  category    String[]
 
   ProjectDetail ProjectDetail[]
 }
