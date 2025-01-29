@@ -6,22 +6,69 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'BLOOM',
     description: "Site vitrine pour présenter le nouvel album de l'artiste Bloom",
-    image: 'https://via.placeholder.com/150',
-    url: 'https://www.google.com',
-    date: new Date(),
+    image: '/public/echoes.png',
+    url: 'https://rendu-creative-dev-five.vercel.app/',
+    category: ['Site vitrine', 'Musique'],
+    year: '2025',
   },
   {
-    name: 'Project 2',
-    description: 'Description 2',
-    image: 'https://via.placeholder.com/150',
-    url: 'https://www.google.com',
-    date: new Date(),
+    name: 'InnoWave',
+    description: 'Site vitrine pour présenter les services de l\'entreprise InnoWave',
+    image: '/public/innowave.png',
+    url: 'https://inno-wave.vercel.app/',
+    category: ['Site vitrine', 'Blog', 'Entreprise'],
+    year: '2024',
   },
   {
-    name: 'Project 3',
-    description: 'Description 3',
-    image: 'https://via.placeholder.com/150',
-    url: 'https://www.google.com',
-    date: new Date(),
+    name: '7 Digits',
+    description: '',
+    image: '/public/7digits.png',
+    url: 'https://creative-dev-project.vercel.app/',
+    category: ['Creation', 'Artistique'],
+    year: '2024',
   },
+  {
+    name: 'Maquette Twitch',
+    description: '',
+    image: '/public/twitch.png',
+    url: 'https://maquette-twitch.vercel.app/',
+    category: ['Creation', 'Maquette'],
+    year: '2023',
+  },
+  {
+    name: 'Expert SA',
+    description: '',
+    image: '/public/expert.png',
+    url: 'https://maquette-expert-sa.vercel.app/',
+    category: ['Creation', 'Entreprise'],
+    year: '2023',
+  },
+  {
+    name: 'Nexus',
+    description: 'Site vitrine pour présenter la boîte le Nexus',
+    image: '/public/nexus.png',
+    url: 'https://nexus-flax.vercel.app/',
+    category: ['Site vitrine', 'Entreprise', 'Musique'],
+    year: '2022',
+  }
 ]
+
+export async function main() {
+  console.log('Start seeding...')
+  for (const p of projectsData) {
+    await prisma.project.create({
+      data: p,
+    })
+  }
+}
+
+main()
+  .catch(e => {
+    console.log('error')
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    console.log('End seeding...')
+    await prisma.$disconnect()
+  })
