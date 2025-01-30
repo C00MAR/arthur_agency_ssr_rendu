@@ -6,6 +6,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
+// Extend ScrollTrigger type to include our custom property
+interface CustomScrollTrigger extends ScrollTrigger {
+  wrapping?: boolean;
+}
+
 const HomeClient = ({ projects }: { projects: Project[] }) => {
   const projectsDuplicated = [...projects, ...projects];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,38 +41,40 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
     const trigger = ScrollTrigger.create({
       start: 0,
       onUpdate(self) {
-        if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
-          wrapForward(self);
-        } else if (self.progress < 1e-5 && self.direction < 0 && !self.wrapping) {
-          wrapBackward(self);
+        const customSelf = self as CustomScrollTrigger;
+        
+        if (customSelf.progress === 1 && customSelf.direction > 0 && !customSelf.wrapping) {
+          wrapForward(customSelf);
+        } else if (customSelf.progress < 1e-5 && customSelf.direction < 0 && !customSelf.wrapping) {
+          wrapBackward(customSelf);
         } else {
-          scrub.vars.totalTime = snap((iteration + self.progress) * seamlessLoop.duration());
+          scrub.vars.totalTime = snap((iteration + customSelf.progress) * seamlessLoop.duration());
           scrub.invalidate().restart();
-          self.wrapping = false;
+          customSelf.wrapping = false;
         }
       },
       end: "+=3000",
       pin: containerRef.current,
-    });
+  });
 
-    function wrapForward(trigger) {
-      iteration++;
-      trigger.wrapping = true;
-      trigger.scroll(trigger.start + 1);
+  function wrapForward(trigger: CustomScrollTrigger) {
+    iteration++;
+    trigger.wrapping = true;
+    trigger.scroll(trigger.start + 1);
+  }
+  
+  function wrapBackward(trigger: CustomScrollTrigger) {
+    iteration--;
+    if (iteration < 0) {
+      iteration = projects.length;
+      seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10);
+      scrub.pause();
     }
+    trigger.wrapping = true;
+    trigger.scroll(trigger.end - 1);
+  }
 
-    function wrapBackward(trigger) {
-      iteration--;
-      if (iteration < 0) {
-        iteration = projects.length;
-        seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10);
-        scrub.pause();
-      }
-      trigger.wrapping = true;
-      trigger.scroll(trigger.end - 1);
-    }
-
-    function buildSeamlessLoop(items, spacing) {
+    function buildSeamlessLoop(items: HTMLElement[], spacing: number) {
       const overlap = Math.ceil((1 / spacing) * 2);
       const startTime = items.length * spacing + 0.5;
       const loopTime = (items.length + overlap) * spacing + 1;
