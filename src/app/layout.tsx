@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SmoothScrolling from "@/components/SmoothScrolling";
 import BackgroundVideo from "@/components/BackgroundVideo";
 
 export const metadata: Metadata = {
@@ -17,7 +16,7 @@ export default function RootLayout({
     <html lang="fr">
       <body>
         <BackgroundVideo />
-        <SmoothScrolling>{children}</SmoothScrolling>
+        {children}
       </body>
     </html>
   );

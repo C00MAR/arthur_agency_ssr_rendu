@@ -1,6 +1,7 @@
 import { getProject } from "@/lib/action";
 import { Project } from "@/app/types/Project";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -22,7 +23,7 @@ const ProjectDetails = async ({ params }: Props) => {
         <div className="w-1/2 bg-black h-0.5 mb-4"></div>
         <p className="mb-4 text-lg">{project.description}</p>
         <Image src={project.image} alt={project.name} width={600} height={600} />
-        <a className="text-lg mt-4 mb-20 bg-black text-white border border-black px-4 py-2 rounded-3xl" href={project.url}>Visit website</a>
+        <Link className="text-lg mt-4 mb-20 bg-black text-white border border-black px-4 py-2 rounded-3xl" href={project.url} target="_blank" rel="noopener noreferrer">Visit website</Link>
     </div>
     </>;
 };

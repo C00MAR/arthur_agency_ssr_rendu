@@ -2,12 +2,12 @@
 
 import { Project } from "@/app/types/Project";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 const HomeClient = ({ projects }: { projects: Project[] }) => {
+  const projectsDuplicated = [...projects, ...projects];
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLUListElement>(null);
 
@@ -17,10 +17,9 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
     gsap.registerPlugin(ScrollTrigger);
     
     let iteration = 0;
-    const spacing = 0.3;
+    const spacing = 0.08;
     const snap = gsap.utils.snap(spacing);
     
-    // Attendre que le DOM soit prêt
     if (!containerRef.current || !cardsRef.current) return;
 
     const cards = gsap.utils.toArray<HTMLElement>(".projectGallery");
@@ -29,7 +28,7 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
     const seamlessLoop = buildSeamlessLoop(cards as HTMLElement[], spacing);
     const scrub = gsap.to(seamlessLoop, {
       totalTime: 0,
-      duration: 0.5,
+      duration: 1,
       ease: "power3",
       paused: true,
     });
@@ -143,31 +142,24 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
       return seamlessLoop;
     }
 
-    // Cleanup
     return () => {
       trigger.kill();
       seamlessLoop.kill();
       scrub.kill();
     };
-  }, [projects.length]); // Add projects.length as dependency
+  }, [projectsDuplicated.length]);
 
   return (
     <div ref={containerRef} className="gallery">
       <ul ref={cardsRef} className="cards">
-        {projects.map((project, index) => (
-          <li
+        {projectsDuplicated.map((project, index) => (
+          <Link
             key={`${project.id}-${index}`}
+            href={`/projects/${project.id}`}
             style={{ backgroundImage: `url(${project.image})` }}
-            className="projectGallery bg-no-repeat bg-center bg-cover"
+            className="projectGallery bg-no-repeat bg-contain"
           >
-            <Link href={`/projects/${project.id}`} className="">
-              <div className="">
-                {/* <div className="p-4">
-                  <h2 className="text-xl font-semibold">{project.name}</h2>
-                </div> */}
-              </div>
-            </Link>
-          </li>
+          </Link>
         ))}
       </ul>
     </div>

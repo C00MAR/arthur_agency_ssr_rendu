@@ -75,6 +75,11 @@
     src: local('General Sans'), url('https://fonts.cdnfonts.com/s/85793/GeneralSans-BoldItalic.woff') format('woff');
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 h1 {
     font-family: 'General Sans';
@@ -117,6 +122,15 @@ body {
     object-fit: cover;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
 .gallery {
     position: absolute;
     width: 100vw;
@@ -128,18 +142,25 @@ body {
     position: absolute;
     width: 75vw;
     height: 50rem;
-    top: 75%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
 }
 
 .gallery .cards .projectGallery {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 75vw;
-    height: 50rem;
+    width: inherit;
+    height: 50%;
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+}
+
+.gallery .cards .projectGallery:hover {
+    scale: 2;
 }
