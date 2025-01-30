@@ -187,7 +187,7 @@ body {
 
 input,
 textarea {
-  @apply border border-gray-300 rounded-md p-3;
+  @apply py-3 px-5 rounded-lg w-full leading-5 outline-black outline-offset-2 outline-1;
 }
 
 header {
