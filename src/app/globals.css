@@ -189,3 +189,7 @@ input,
 textarea {
   @apply border border-gray-300 rounded-md p-3;
 }
+
+header {
+  transform: translate(-50%);
+}

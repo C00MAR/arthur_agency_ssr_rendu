@@ -1,12 +1,13 @@
 type Project = {
   id: string;
   name: string;
+  slug: string;
   image: string;
   description: string;
   url: string;
   year: string;
   category: string[];
-  ProjectDetail?: ProjectDetail[];
+  ProjectDetail?: Omit<ProjectDetail, 'project'>[];
 };
 
 type ProjectDetail = {
@@ -15,7 +16,7 @@ type ProjectDetail = {
   objective: string;
   technology: string[];
   results: string;
-  project: Project;
+  project: Omit<Project, 'ProjectDetail'>;
   projectId: string;
 };
 

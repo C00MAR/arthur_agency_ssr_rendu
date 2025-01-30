@@ -19,13 +19,17 @@ export const getAllProjects = async () => {
   }
 };
 
-export const getProject = async (id: string) => {
+export const getProject = async (slug: string) => {
   try {
-    const project = await prisma.project.findUnique({
-      where: {
-        id,
+    const project = await prisma.project.findFirst({
+      where: { 
+        slug 
       },
+      include: {
+        ProjectDetail: true
+      }
     });
+    
     if (!project) throw new Error("Project not found");
     return project;
   } catch (error) {
