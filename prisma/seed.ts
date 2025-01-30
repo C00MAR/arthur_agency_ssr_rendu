@@ -2,9 +2,17 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const projectsData: Prisma.ProjectCreateInput[] = [
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+const projectsData: (Prisma.ProjectCreateInput & { slug: string })[] = [
   {
     name: 'BLOOM',
+    slug: generateSlug('BLOOM'),
     description: "Site vitrine pour présenter le nouvel album de l'artiste Bloom",
     image: '/echoes.png',
     url: 'https://rendu-creative-dev-five.vercel.app/',
@@ -13,6 +21,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: 'InnoWave',
+    slug: generateSlug('InnoWave'),
     description: 'Site vitrine pour présenter les services de l\'entreprise InnoWave',
     image: '/innowave.png',
     url: 'https://inno-wave.vercel.app/',
@@ -21,6 +30,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: '7 Digits',
+    slug: generateSlug('7 Digits'),
     description: '',
     image: '/7digits.png',
     url: 'https://creative-dev-project.vercel.app/',
@@ -29,6 +39,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: 'Maquette Twitch',
+    slug: generateSlug('Maquette Twitch'),
     description: '',
     image: '/twitch.png',
     url: 'https://maquette-twitch.vercel.app/',
@@ -37,6 +48,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: 'Expert SA',
+    slug: generateSlug('Expert SA'),
     description: '',
     image: '/expert.png',
     url: 'https://maquette-expert-sa.vercel.app/',
@@ -45,6 +57,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: 'Nexus',
+    slug: generateSlug('Nexus'),
     description: 'Site vitrine pour présenter la boîte le Nexus',
     image: '/nexus.png',
     url: 'https://nexus-flax.vercel.app/',
