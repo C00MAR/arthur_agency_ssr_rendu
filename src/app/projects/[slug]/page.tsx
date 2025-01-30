@@ -53,7 +53,7 @@ const ProjectDetails = async ({
 
         <div className="mt-6 md:mt-20 mb-40">
           <ul className="flex gap-4">
-            {projectDetail?.technology.map((tech, index) => (
+            {projectDetail?.technology && projectDetail.technology.map((tech, index) => (
               <li className="text-sm px-4 py-2 bg-black/70 rounded-full text-white" key={index}>{tech}</li>
             ))}
           </ul>

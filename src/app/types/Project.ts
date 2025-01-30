@@ -1,10 +1,10 @@
 type BaseProjectDetail = {
-  id: string;
-  context: string;
-  objective: string;
+  id?: string;
+  context?: string;
+  objective?: string;
   technology: string[];
-  results: string;
-  projectId: string;
+  results?: string;
+  projectId?: string;
 };
 
 type Project = {
@@ -16,10 +16,16 @@ type Project = {
   url: string;
   year: string;
   category: string[];
-  ProjectDetail?: Partial<Omit<BaseProjectDetail, 'project'>>[];
+  ProjectDetail?: BaseProjectDetail[];
 };
 
-type ProjectDetail = BaseProjectDetail & {
+type ProjectDetail = {
+  id: string;
+  context: string;
+  objective: string;
+  technology: string[];
+  results: string;
+  projectId: string;
   project: Omit<Project, 'ProjectDetail'>;
 };
 
