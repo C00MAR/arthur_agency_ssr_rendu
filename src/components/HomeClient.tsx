@@ -17,7 +17,7 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
     gsap.registerPlugin(ScrollTrigger);
     
     let iteration = 0;
-    const spacing = 0.08;
+    const spacing = 0.1;
     const snap = gsap.utils.snap(spacing);
     
     if (!containerRef.current || !cardsRef.current) return;
@@ -68,15 +68,17 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
     }
 
     function buildSeamlessLoop(items, spacing) {
-      let overlap = Math.ceil((1 / spacing) * 2);
-      let startTime = items.length * spacing + 0.5;
-      let loopTime = (items.length + overlap) * spacing + 1;
-      let rawSequence = gsap.timeline({ paused: true });
-      let seamlessLoop = gsap.timeline({
+      const overlap = Math.ceil((1 / spacing) * 2);
+      const startTime = items.length * spacing + 0.5;
+      const loopTime = (items.length + overlap) * spacing + 1;
+      const rawSequence = gsap.timeline({ paused: true });
+      const seamlessLoop = gsap.timeline({
         paused: true,
         repeat: -1,
         onRepeat() {
-          this._time === this._dur && (this._tTime += this._dur - 0.05);
+          if (this._time === this._dur) {
+            this._tTime += this._dur - 0.05;
+          }
         },
       });
 
@@ -118,7 +120,9 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
             },
             time
           );
-        i <= items.length && seamlessLoop.add("label" + i, time);
+        if (i <= items.length) {
+          seamlessLoop.add("label" + i, time);
+        }
       }
 
       rawSequence.time(startTime);
@@ -147,7 +151,7 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
       seamlessLoop.kill();
       scrub.kill();
     };
-  }, [projectsDuplicated.length]);
+  }, [projects.length, projectsDuplicated.length]);
 
   return (
     <div ref={containerRef} className="gallery">
@@ -155,7 +159,7 @@ const HomeClient = ({ projects }: { projects: Project[] }) => {
         {projectsDuplicated.map((project, index) => (
           <Link
             key={`${project.id}-${index}`}
-            href={`/projects/${project.id}`}
+            href={`/projects/${project.slug}`}
             style={{ backgroundImage: `url(${project.image})` }}
             className="projectGallery bg-no-repeat bg-contain"
           >
