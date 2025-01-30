@@ -7,7 +7,7 @@ type Project = {
   url: string;
   year: string;
   category: string[];
-  ProjectDetail?: Omit<ProjectDetail, 'project'>[];
+  ProjectDetail?: Partial<Omit<ProjectDetail, 'project'>>[];
 };
 
 type ProjectDetail = {
