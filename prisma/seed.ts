@@ -6,7 +6,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'BLOOM',
     description: "Site vitrine pour présenter le nouvel album de l'artiste Bloom",
-    image: '/public/echoes.png',
+    image: '/echoes.png',
     url: 'https://rendu-creative-dev-five.vercel.app/',
     category: ['Site vitrine', 'Musique'],
     year: '2025',
@@ -14,7 +14,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'InnoWave',
     description: 'Site vitrine pour présenter les services de l\'entreprise InnoWave',
-    image: '/public/innowave.png',
+    image: '/innowave.png',
     url: 'https://inno-wave.vercel.app/',
     category: ['Site vitrine', 'Blog', 'Entreprise'],
     year: '2024',
@@ -22,7 +22,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: '7 Digits',
     description: '',
-    image: '/public/7digits.png',
+    image: '/7digits.png',
     url: 'https://creative-dev-project.vercel.app/',
     category: ['Creation', 'Artistique'],
     year: '2024',
@@ -30,7 +30,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'Maquette Twitch',
     description: '',
-    image: '/public/twitch.png',
+    image: '/twitch.png',
     url: 'https://maquette-twitch.vercel.app/',
     category: ['Creation', 'Maquette'],
     year: '2023',
@@ -38,7 +38,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'Expert SA',
     description: '',
-    image: '/public/expert.png',
+    image: '/expert.png',
     url: 'https://maquette-expert-sa.vercel.app/',
     category: ['Creation', 'Entreprise'],
     year: '2023',
@@ -46,7 +46,7 @@ const projectsData: Prisma.ProjectCreateInput[] = [
   {
     name: 'Nexus',
     description: 'Site vitrine pour présenter la boîte le Nexus',
-    image: '/public/nexus.png',
+    image: '/nexus.png',
     url: 'https://nexus-flax.vercel.app/',
     category: ['Site vitrine', 'Entreprise', 'Musique'],
     year: '2022',
