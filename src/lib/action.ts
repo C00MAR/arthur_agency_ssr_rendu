@@ -11,8 +11,23 @@ export const getAllProjects = async () => {
       orderBy: {
         year: "desc",
       },
+      include: {
+        ProjectDetail: {
+          select: {
+            technology: true
+          }
+        }
+      }
     });
-    return projects;
+    
+    const transformedProjects = projects.map(project => ({
+      ...project,
+      technologies: project.ProjectDetail
+        ? Array.from(new Set(project.ProjectDetail.flatMap(detail => detail.technology)))
+        : []
+    }));
+
+    return transformedProjects;
   } catch (error) {
     console.error("[ACTIONS - GET PROJECTS - ERROR]", error);
     return [];

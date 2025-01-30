@@ -11,8 +11,17 @@ const FilterPanel = ({ projects, onFilterChange }: FilterPanelProps) => {
     const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const categories = Array.from(new Set(projects.map(p => p.category)));
-    const technologies = Array.from(new Set(projects.flatMap(p => p.technologies)));
+    // Get unique categories
+    const categories = Array.from(new Set(projects.flatMap(p => p.category)));
+    
+    // Get unique technologies from ProjectDetail
+    const technologies = Array.from(new Set(
+        projects.flatMap(p => 
+            p.ProjectDetail
+                ? p.ProjectDetail.flatMap(detail => detail.technology)
+                : []
+        )
+    ));
 
     const toggleCategory = (category: string) => {
         const newCategories = selectedCategories.includes(category)
@@ -35,13 +44,15 @@ const FilterPanel = ({ projects, onFilterChange }: FilterPanelProps) => {
 
         if (categories.length > 0) {
             filteredProjects = filteredProjects.filter(project =>
-                categories.includes(project.category)
+                categories.some(cat => project.category.includes(cat))
             );
         }
 
         if (technologies.length > 0) {
             filteredProjects = filteredProjects.filter(project =>
-                project.technologies.some(tech => technologies.includes(tech))
+                project.ProjectDetail?.some(detail =>
+                    technologies.some(tech => detail.technology.includes(tech))
+                )
             );
         }
 
@@ -78,7 +89,7 @@ const FilterPanel = ({ projects, onFilterChange }: FilterPanelProps) => {
                                             type="checkbox"
                                             checked={selectedCategories.includes(category)}
                                             onChange={() => toggleCategory(category)}
-                                            className="rounded border-gray-300"
+                                            className="rounded border-gray-300 w-fit"
                                         />
                                         <span className="text-sm">{category}</span>
                                     </label>
@@ -95,7 +106,7 @@ const FilterPanel = ({ projects, onFilterChange }: FilterPanelProps) => {
                                             type="checkbox"
                                             checked={selectedTechnologies.includes(tech)}
                                             onChange={() => toggleTechnology(tech)}
-                                            className="rounded border-gray-300"
+                                            className="rounded border-gray-300 w-fit"
                                         />
                                         <span className="text-sm">{tech}</span>
                                     </label>
