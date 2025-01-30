@@ -28,3 +28,30 @@ body {
     height: 100%;
     object-fit: cover;
 }
+
+.gallery {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.gallery .cards {
+    position: absolute;
+    width: 75vw;
+    height: 50rem;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gallery .cards .projectGallery {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 75vw;
+    height: 50rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
